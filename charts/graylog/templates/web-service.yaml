@@ -46,7 +46,7 @@ spec:
   loadBalancerSourceRanges: {{ .Values.graylog.services.web.loadBalancerSourceRanges }}
   {{- end }}
   {{- end }}
-  {{- if eq "clusterIP" .Values.graylog.services.web.type }}
+  {{- if eq "ClusterIP" .Values.graylog.services.web.type }}
   {{- if not .Values.graylog.services.web.port }}
   clusterIP: None
   publishNotReadyAddresses: true

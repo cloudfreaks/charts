@@ -194,8 +194,8 @@ graylog:
     web:
       ## Graylog web service type.
       ##
-      type: clusterIP
-      ## Graylog web service port. If a "headless service" is needed, set clusterIP as tipe and leave this value unset (empty)
+      type: ClusterIP
+      ## Graylog web service port. If a "headless service" is needed, set ClusterIP as type and leave this value unset (empty)
       ##
       port: 9000
 
@@ -220,7 +220,7 @@ graylog:
       enabled: true
       ## Graylog master service type.
       ##
-      type: clusterIP
+      type: ClusterIP
       ## Graylog master service port.
       ##
       port: 9000
@@ -266,7 +266,7 @@ graylog:
     # udp:
     #   service:
     #     name: your-udp-service-name
-    #     type: clusterIP
+    #     type: ClusterIP
     #   ports:
     #     - name: syslog
     #       port: 12222
