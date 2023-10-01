@@ -44,6 +44,6 @@ spec:
         - destination:
             host: {{ template "graylog.fullname" $ }}-web
             port:
-              number: {{ default 9000 .Values.graylog.service.port }}
+              number: {{ default 9000 .Values.graylog.services.web.port }}
 {{- end }}
 

@@ -156,7 +156,7 @@ spec:
             - containerPort: 9833
               name: metrics
           {{- end }}
-          {{- range .Values.graylog.service.ports }}
+          {{- range .Values.graylog.services.web.ports }}
             - containerPort: {{ .port }}
               name: {{ .name}}
               protocol: {{ .protocol }}
