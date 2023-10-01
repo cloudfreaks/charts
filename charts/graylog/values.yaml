@@ -202,7 +202,7 @@ graylog:
       ## By default, a "graylog" port is created targeting the above port,
       ## add additional ports for the service/statefulset to expose here, example:
       ## ports: [
-      ##  name: tcpport
+      ##  name: myservice
       ##  port: 1234
       ##  protocol: tcp
       ## ]
