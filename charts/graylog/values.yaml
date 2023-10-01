@@ -212,10 +212,7 @@ graylog:
       ## Graylog web service annotations
       ##
       annotations: {}
-      headless:
-        ## Add suffix to headless service name
-        ##
-        suffix: ""
+      externalTrafficPolicy:
 
     master:
       ## Enable Graylog master service

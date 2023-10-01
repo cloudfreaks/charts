@@ -13,9 +13,6 @@ metadata:
 {{ include "graylog.metadataLabels" . | indent 4 }}
     app.kubernetes.io/component: "web"
 spec:
-  selector:
-    app.kubernetes.io/name: {{ template "graylog.name" . }}
-    app.kubernetes.io/instance: "{{ .Release.Name }}"
   ports:
     - name: graylog
       port: {{ default 9000 .Values.graylog.services.web.port }}
@@ -26,37 +23,38 @@ spec:
       {{- else if eq .Values.graylog.services.web.type "ClusterIP" }}
       nodePort: null
       {{- end }}
-{{- range .Values.graylog.services.web.ports }}
+      {{- range .Values.graylog.services.web.ports }}
     - name: {{ .name }}
       port: {{ .port }}
       protocol: {{ .protocol }}
       targetPort: {{ .port }}
-{{- end }}
+      {{- end }}
 
-{{- if .Values.graylog.services.web.externalIPs }}
+  {{- if .Values.graylog.services.web.externalIPs }}
   externalIPs:
-{{ toYaml .Values.graylog.services.web.externalIPs | indent 4 }}
-{{- end }}
+  {{ toYaml .Values.graylog.services.web.externalIPs | indent 4 }}
+  {{- end }}
   type: {{ .Values.graylog.services.web.type }}
   {{- if eq "LoadBalancer" .Values.graylog.services.web.type }}
-  {{- if not empty .Values.graylog.services.web.loadBalancerIP }}
+  {{- if not .Values.graylog.services.web.loadBalancerIP }}
   loadBalancerIP: {{ .Values.graylog.services.web.loadBalancerIP }}
   {{- end }}
-  {{- if not empty .Values.graylog.services.web.loadBalancerClass }}
+  {{- if not .Values.graylog.services.web.loadBalancerClass }}
   loadBalancerClass: {{ .Values.graylog.services.web.loadBalancerClass }}
   {{- end }}
-  {{- if not empty .Values.graylog.services.web.loadBalancerSourceRanges }}
+  {{- if not .Values.graylog.services.web.loadBalancerSourceRanges }}
   loadBalancerSourceRanges: {{ .Values.graylog.services.web.loadBalancerSourceRanges }}
   {{- end }}
   {{- end }}
   {{- if eq "ClusterIP" .Values.graylog.services.web.type }}
-  {{- if not empty .Values.graylog.services.web.port }}
+    {{- if not .Values.graylog.services.web.port }}
   clusterIP: {{ .Values.graylog.services.web.port }}
-  {{- else }}
+    {{- else }}
   clusterIP: None
   publishNotReadyAddresses: true
+    {{- end }}
   {{- end }}
 
-  {{- if or (eq .Values.graylog.services.web.type "LoadBalancer") (eq .Values.graylog.services.web.type "NodePort") }}
+  {{- if and (or (eq .Values.graylog.services.web.type "NodePort") (eq .Values.graylog.services.web.type "LoadBalancer")) (not (empty .Values.graylog.services.web.externalTrafficPolicy)) }}
   externalTrafficPolicy: {{ .Values.graylog.services.web.externalTrafficPolicy | quote }}
   {{- end }}
