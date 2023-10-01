@@ -8,7 +8,7 @@ metadata:
 {{ . | toYaml | indent 4 }}
 {{- end }}
 spec:
-  serviceName: {{ template "graylog.service.headless.name" . }}
+  serviceName: {{ template "graylog.fullname" . }}-headless
   replicas: {{ .Values.graylog.replicas }}
   selector:
     matchLabels:
