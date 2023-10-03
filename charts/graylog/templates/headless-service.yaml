@@ -4,16 +4,14 @@ metadata:
   name: {{ template "graylog.fullname" . }}-headless
   labels:
 {{ include "graylog.metadataLabels" . | indent 4 }}
-  annotations:
-    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
 spec:
   ports:
-    - name: graylog
-      port: 9000
+  - name: graylog
+    port: 9000
 {{- if .Values.graylog.metrics.enabled }}
-    - name: metrics
-      port: 9833
-      targetPort: 9833
+  - name: metrics
+    port: 9833
+    targetPort: 9833
 {{- end }}
   type: ClusterIP
   clusterIP: None
