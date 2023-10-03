@@ -15,11 +15,6 @@ spec:
       port: {{ default 9000 .Values.graylog.services.web.port }}
       protocol: TCP
       targetPort: 9000
-{{- if or (eq .Values.graylog.services.web.type "LoadBalancer") (eq .Values.graylog.services.web.type "NodePort") }}
-      nodePort: {{ .Values.graylog.services.web.port }}
-{{- else if eq .Values.graylog.services.web.type "ClusterIP" }}
-      nodePort: null
-{{- end }}
 {{- range .Values.graylog.services.web.ports }}
     - name: {{ .name }}
       port: {{ .port }}

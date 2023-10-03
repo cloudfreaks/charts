@@ -20,11 +20,6 @@ spec:
 {{- end }}
       protocol: TCP
       targetPort: 9000
-{{- if or (eq .Values.graylog.services.master.type "LoadBalancer") (eq .Values.graylog.services.master.type "NodePort") }}
-  {{- if .Values.graylog.services.master.nodePort }}
-      nodePort:  {{ .Values.graylog.services.master.nodePort }}
-  {{- end }}
-{{- end }}
 {{- if .Values.graylog.services.master.externalIPs }}
   externalIPs:
 {{ toYaml .Values.graylog.services.master.externalIPs | indent 4 }}
