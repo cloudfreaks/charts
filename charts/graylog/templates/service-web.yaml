@@ -10,6 +10,9 @@ metadata:
 {{ include "graylog.metadataLabels" . | indent 4 }}
     app.kubernetes.io/component: "web"
 spec:
+  selector:
+    app.kubernetes.io/name: {{ template "graylog.name" . }}
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
   ports:
     - name: graylog
       port: {{ default 9000 .Values.graylog.services.web.port }}
@@ -21,7 +24,6 @@ spec:
       protocol: {{ .protocol }}
       targetPort: {{ .port }}
 {{- end }}
-
 {{- if .Values.graylog.services.web.externalIPs }}
   externalIPs:
 {{ toYaml .Values.graylog.services.web.externalIPs | indent 4 }}
@@ -38,7 +40,6 @@ spec:
   loadBalancerSourceRanges: {{ .Values.graylog.services.web.loadBalancerSourceRanges }}
 {{- end }}
 {{- end }}
-
 {{- if and (or (eq .Values.graylog.services.web.type "NodePort") (eq .Values.graylog.services.web.type "LoadBalancer")) (not (empty .Values.graylog.services.web.externalTrafficPolicy)) }}
   externalTrafficPolicy: {{ .Values.graylog.services.web.externalTrafficPolicy | quote }}
 {{- end }}
